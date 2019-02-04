@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>Login Here</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <meta name="google-signin-client_id" content="962746158523-45hiehmmdusekjc1e1566m3n5c66i3ce.apps.googleusercontent.com">    
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+           function onSignIn(googleUser)     {
+               let prof = {
+                   id_token: googleUser.getAuthResponse().id_token
+               }
+              var xhr = new XMLHttpRequest();
+              xhr.open('POST', '/google_user');
+              xhr.setRequestHeader('Content-Type', 'application/json');
+              xhr.onload = () => {
+                    document.write(xhr.responseText);
+              };
+              xhr.send(JSON.stringify(prof));
+            }
+        </script>        
+    </head>
+    <body class="container">
+        <div class="page-header">
+            <h1>Simple Auth-System</h1>
+        </div>
+        <p id="demo"></p>
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/signup">Sign Up</a></li>
+                        <li><a href="/dashboard">Dashboard</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/login">Log In</a></li>
+                        <li><a href="/logout">Log Out</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="container row">
+            <div class="jumbotron col-sm-4 pull-center">
+                <form action="/login" method="post">
+                    <div>
+                        <label>Username:</label>
+                        <input type="text" name="username"/>
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input type="password" name="password"/>
+                    </div>
+                    <div>
+                        <input class="btn btn-primary" type="submit" value="Log In"/>
+                        <br/>
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/forgotpassword">Forgot Password?</a></li>
+                    </ul>
+                </form>                  
+            </div>          
+        </div>
+    </body>
+</html>
